@@ -12,6 +12,21 @@ const $author = document.querySelector("#author");
 const $status = document.querySelector("#status");
 const $tableBody = document.querySelector("#table-body")
 
+const $editTableBody = $tableBody.addEventListener('click', e => {
+    if (e.target.className === 'delete' || e.target.className === 'reading-status') {
+        //gets unique id of book from parent element
+        let bookid = e.target.parentElement.parentElement.dataset.bookid
+        
+        if (e.target.className === 'delete') {
+            deleteBook(findBook(bookid))
+            
+        }
+
+        render()
+
+    }
+})
+
 function Book(title, author, status) {
     //the constructor
     this.title = title;
@@ -40,20 +55,18 @@ function addBooktoLibrary() {
 }
 
 
-function deleteBook() {
+function deleteBook(currentBook) {
     //remove book from library
+    myLibrary.splice(currentBook, 1)
 }
 
-function toggleStatus(bookid) {
+function toggleStatus() {
     //toggles read status
 }
 
-function getBookItemId() {
-    $tableBody.addEventListener('click', e => {
-        if (e.target.className === 'delete' || e.target.className === 'reading-status') {
-            console.log(e.target.parentElement.parentElement.dataset.bookid)
-        }
-    })
+function findBook(bookid) {
+    //matches unique id with index in library array
+    console.log(myLibrary.findIndex(book => book.id === bookid))
 }
 
 function render() {
@@ -70,4 +83,4 @@ function render() {
         }).join('')
 }
 
-getBookItemId()
+

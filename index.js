@@ -33,9 +33,6 @@ function Book(title, author, status) {
     this.author = author;
     this.status = status;
     this.id = crypto.randomUUID()
-    this.info = function () {
-        return `${title} by ${author}, ${pages}, ${status}`
-    }
 }
 
 function addBooktoLibrary() {
@@ -60,23 +57,26 @@ function deleteBook(currentBook) {
     myLibrary.splice(currentBook, 1)
 }
 
-function toggleStatus() {
+function toggleStatus(currentBook) {
     //toggles read status
+    myLibrary[currentBook].alreadyRead = !myLibrary[currentBook].alreadyRead
 }
 
 function findBook(bookid) {
     //matches unique id with index in library array
-    console.log(myLibrary.findIndex(book => book.id === bookid))
+    return myLibrary.findIndex(book => book.id === bookid)
 }
 
 function render() {
+    //TODO: alreadyRead  is not displaying properky when submit not read
+    //Apparently the value attribute for html can only be a string
         console.log('rendered')
         $tableBody.innerHTML = myLibrary.map(book => {
            return (
                `<tr data-bookid = '${book.id}'>
                     <td>${book.title}</td>
                     <td>${book.author}</td>
-                    <td><button class='reading-status'>${book.status}</button></td>
+                    <td><button class='reading-status'>${book.status === 'read' ?'Read':"Not Read"}</button></td>
                     <td><button class='delete'>Delete</button></td>
                 </tr>`
                 )

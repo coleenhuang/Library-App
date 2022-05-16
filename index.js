@@ -18,8 +18,10 @@ const $editTableBody = $tableBody.addEventListener('click', e => {
         let bookid = e.target.parentElement.parentElement.dataset.bookid
         
         if (e.target.className === 'delete') {
-            deleteBook(findBook(bookid))
-            
+            deleteBook(findBook(bookid)) 
+        }
+        else if (e.target.className === 'reading-status') {
+            toggleStatus(findBook(bookid))
         }
 
         render()
@@ -59,7 +61,12 @@ function deleteBook(currentBook) {
 
 function toggleStatus(currentBook) {
     //toggles read status
-    myLibrary[currentBook].alreadyRead = !myLibrary[currentBook].alreadyRead
+    if (myLibrary[currentBook].status === "read"){
+        myLibrary[currentBook].status = "not read"
+    }
+    else {
+        myLibrary[currentBook].status = "read"
+    }
 }
 
 function findBook(bookid) {
@@ -68,8 +75,6 @@ function findBook(bookid) {
 }
 
 function render() {
-    //TODO: alreadyRead  is not displaying properky when submit not read
-    //Apparently the value attribute for html can only be a string
         console.log('rendered')
         $tableBody.innerHTML = myLibrary.map(book => {
            return (

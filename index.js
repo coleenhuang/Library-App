@@ -3,7 +3,8 @@ const $form = document.querySelector("form").addEventListener("submit", (e) => {
     e.preventDefault();
     console.log('form submitted')
     addBooktoLibrary()
-    document.querySelector('form').reset();
+    //resets form to default
+    document.querySelector('form').reset(); 
   });
 
 const $title = document.querySelector("#title");
@@ -53,7 +54,8 @@ function render() {
                `<tr>
                     <td>${book.title}</td>
                     <td>${book.author}</td>
-                    <td>${book.status}</td>
+                    <td><button>${book.status}</button></td>
+                    <td><button>Delete</button></td>
                 </tr>`
                 )
         }).join('')

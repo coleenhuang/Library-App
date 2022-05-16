@@ -4,9 +4,11 @@ const $form = document.querySelector("form").addEventListener("submit", (e) => {
     console.log('form submitted')
     addBooktoLibrary()
   });
+
 const $title = document.querySelector("#title");
 const $author = document.querySelector("#author");
 const $status = document.querySelector("#status");
+const $tableBody = document.querySelector("#table-body")
 
 function Book(title, author, status) {
     //the constructor
@@ -28,6 +30,8 @@ function addBooktoLibrary() {
     else {
         let newBook = new Book($title.value, $author.value, $status.value)
         myLibrary.push(newBook);
+        console.log('book added')
+        render();
     }
     
 }
@@ -39,4 +43,17 @@ function deleteBook() {
 
 function toggleStatus() {
     //toggles read status
+}
+
+function render() {
+        console.log('rendered')
+        $tableBody.innerHTML = myLibrary.map(book => {
+           return (
+               `<tr>
+                    <td>${book.title}</td>
+                    <td>${book.author}</td>
+                    <td>${book.status}</td>
+                </tr>`
+                )
+        }).join('')
 }

@@ -17,6 +17,7 @@ function Book(title, author, status) {
     this.title = title;
     this.author = author;
     this.status = status;
+    this.id = crypto.randomUUID()
     this.info = function () {
         return `${title} by ${author}, ${pages}, ${status}`
     }
@@ -43,20 +44,30 @@ function deleteBook() {
     //remove book from library
 }
 
-function toggleStatus() {
+function toggleStatus(bookid) {
     //toggles read status
+}
+
+function getBookItemId() {
+    $tableBody.addEventListener('click', e => {
+        if (e.target.className === 'delete' || e.target.className === 'reading-status') {
+            console.log(e.target.parentElement.parentElement.dataset.bookid)
+        }
+    })
 }
 
 function render() {
         console.log('rendered')
         $tableBody.innerHTML = myLibrary.map(book => {
            return (
-               `<tr>
+               `<tr data-bookid = '${book.id}'>
                     <td>${book.title}</td>
                     <td>${book.author}</td>
-                    <td><button>${book.status}</button></td>
-                    <td><button>Delete</button></td>
+                    <td><button class='reading-status'>${book.status}</button></td>
+                    <td><button class='delete'>Delete</button></td>
                 </tr>`
                 )
         }).join('')
 }
+
+getBookItemId()
